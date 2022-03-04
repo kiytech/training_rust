@@ -3,9 +3,8 @@
 仕様: -1000 以上 1000 以下のランダムな整数を100回発生させ、その整数を昇順に並び替える。
 */
 use rand::Rng;
-use std::io::{self, Write};
 
-const ARRAY_SIZE: usize = 5;
+const ARRAY_SIZE: usize = 100;
 
 fn main() {
     let mut array: [i32; ARRAY_SIZE] = [0; ARRAY_SIZE]; 
@@ -33,10 +32,9 @@ fn main() {
             }
             print!("[{}] ", array[i]);
         }
-        if !is_swapped{ 
-            io::stdout().fmt();
+        println!();
+        if !is_swapped { 
             break;
         };
-        println!();
     }
 }
