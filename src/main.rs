@@ -3,11 +3,14 @@
 仕様: -1000 以上 1000 以下のランダムな整数を100回発生させ、その整数を昇順に並び替える。
 */
 use rand::Rng;
+use std::io::{self, Write};
+
+const ARRAY_SIZE: usize = 5;
 
 fn main() {
-    const ARRAY_SIZE: usize = 5;
     let mut array: [i32; ARRAY_SIZE] = [0; ARRAY_SIZE]; 
     let mut count = 0;
+    print!("Init: ");
     loop {
         if count > ARRAY_SIZE-1 {
             println!();
@@ -18,11 +21,22 @@ fn main() {
         count+=1;
     }
 
-    for (i, &element) in array.iter().enumerate() {
-        if i > ARRAY_SIZE-2 { break; }
-        if element >= array[i+1] {
-            array.swap(i, i+1);
+    for j in 0..ARRAY_SIZE-1 { 
+        let mut is_swapped = false;
+        print!(" ({}): ", j);
+        for i in 0..ARRAY_SIZE {
+            if i < ARRAY_SIZE-1 {
+                if array[i] >= array[i+1] {
+                    array.swap(i, i+1);
+                    is_swapped = true;
+                }
+            }
+            print!("[{}] ", array[i]);
         }
-        println!("i: {}, elm: {}, next: {}", i, element, array[i+1]);
+        if !is_swapped{ 
+            io::stdout().fmt();
+            break;
+        };
+        println!();
     }
 }
