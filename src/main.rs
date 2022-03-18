@@ -18,20 +18,23 @@ fn main() {
         print!("[{}] ", array[count]);
         count+=1;
     }
-    print!("Result: ");
+    print!("\nResult: ");
     for i in 0..ARRAY_SIZE-1 {
-        let (min_index, _min) =
-            array[i ..].iter()
-                .enumerate()
-                .fold((usize::MAX, i32::MAX), |(i_a, a), (i_b, &b)| {
-                    if b < a {
-                        (i_b, b)
-                    } else {
-                        (i_a, a)
-                    }
-                });
+        let (min_index, _min) = min_ind(array[i ..].to_vec());
         array.swap(i, i+min_index);
         print!("[{}] ", array[i]);
     }
     println!("[{}]", array[ARRAY_SIZE-1]);
+}
+
+fn min_ind(v:Vec<i32>) -> (usize, i32) {
+    v.iter()
+        .enumerate()
+        .fold((usize::MAX, i32::MAX), |(i_a, a), (i_b, &b)| {
+            if b < a {
+                (i_b, b)
+            } else {
+                (i_a, a)
+            }
+        })
 }
