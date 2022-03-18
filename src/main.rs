@@ -31,9 +31,7 @@ fn main() {
                     }
                 });
 
-        // if i != min_index {
-            array.swap(i, i+min_index);
-        // }
+        array.swap(i, i+min_index);
         print!("[{}] ", array[i]);
     }
     println!("[{}]", array[ARRAY_SIZE-1]);
