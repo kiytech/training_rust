@@ -30,7 +30,6 @@ fn main() {
                         (i_a, a)
                     }
                 });
-
         array.swap(i, i+min_index);
         print!("[{}] ", array[i]);
     }
