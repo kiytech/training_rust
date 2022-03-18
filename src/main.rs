@@ -4,7 +4,7 @@
 */
 use rand::Rng;
 
-const ARRAY_SIZE: usize = 5;
+const ARRAY_SIZE: usize = 100;
 fn main() {
     let mut array: [i32; ARRAY_SIZE] = [0; ARRAY_SIZE];
     let mut count = 0;
@@ -18,23 +18,16 @@ fn main() {
         print!("[{}] ", array[count]);
         count+=1;
     }
-    print!("Result: ");
-    for i in 0..ARRAY_SIZE-1 {
-        let (min_index, _min) = min_ind(array[i ..].to_vec());
-        array.swap(i, i+min_index);
+    print!("\nResult: ");
+    for target_ind in 1..ARRAY_SIZE {
+        for comp_ind in 0..target_ind {
+            if array[target_ind] < array[comp_ind] {
+                array.swap(target_ind, comp_ind);
+            }
+        }
+    }
+    for i in 0..ARRAY_SIZE {
         print!("[{}] ", array[i]);
     }
-    println!("[{}]", array[ARRAY_SIZE-1]);
-}
-
-fn min_ind (v: Vec<i32>) -> (usize, i32) {
-    v.iter()
-        .enumerate()
-        .fold((usize::MAX, i32::MAX), |(i_a, a), (i_b, &b)| {
-            if b < a {
-                (i_b, b)
-            } else {
-                (i_a, a)
-            }
-        })
+    println!();
 }
