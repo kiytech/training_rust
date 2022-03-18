@@ -4,11 +4,11 @@
 */
 use rand::Rng;
 
-const ARRAY_SIZE: usize = 5;
+const ARRAY_SIZE: usize = 100;
 fn main() {
     let mut array: [i32; ARRAY_SIZE] = [0; ARRAY_SIZE];
     let mut count = 0;
-    print!("Init: ");
+    print!("Init:   ");
     loop {
         if count > ARRAY_SIZE-1 {
             println!();
@@ -18,4 +18,23 @@ fn main() {
         print!("[{}] ", array[count]);
         count+=1;
     }
+    print!("Result: ");
+    for i in 0..ARRAY_SIZE-1 {
+        let (min_index, _min) =
+            array[i ..].iter()
+                .enumerate()
+                .fold((usize::MAX, i32::MAX), |(i_a, a), (i_b, &b)| {
+                    if b < a {
+                        (i_b, b)
+                    } else {
+                        (i_a, a)
+                    }
+                });
+
+        // if i != min_index {
+            array.swap(i, i+min_index);
+        // }
+        print!("[{}] ", array[i]);
+    }
+    println!("[{}]", array[ARRAY_SIZE-1]);
 }
