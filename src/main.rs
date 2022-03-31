@@ -1,35 +1,19 @@
-struct User {
-        username: String,
-        email: String,
-        sign_in_count: u64,
-        active: bool,
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
 }
 
 fn main() {
-    let mut user1 = User {
-        email: String::from("someone@example.com"),
-        username: String::from("someusername123"),
-        active: true,
-        sign_in_count: 1
-    };
+    let rect1 = Rectangle {width: 30, height: 50};
 
-    let user2 = User {
-        email: String::from("anotoher@example.com"),
-        username: String::from("anotherusername567"),
-        ..user1
-    };
-
-    let user3 = build_user(String::from("hoge@example.com"), String::from("hoge"));
-
-    user1.email = String::from("anothermail@example.com");
-    println!("{}", user3.email);
+    println!(
+        "The area of the rectangle is {} aquare pixels.",
+        area(&rect1)
+    );
+    println!("rect1 is {:#?}", rect1);
 }
 
-fn build_user(email: String, username: String) -> User {
-    User {
-        email,
-        username,
-        active:true,
-        sign_in_count:1,
-    }
+fn area(rectangle: &Rectangle) -> u32 {
+    rectangle.width * rectangle.height
 }
