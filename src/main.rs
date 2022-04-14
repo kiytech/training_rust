@@ -49,16 +49,3 @@ fn nodes_swap(mut v:Vec<i32>, mut nodes_idx:NodesIdx) -> Vec<i32> {
     }
     v
 }
-
-#[allow(dead_code)]
-fn ind_max(v:Vec<i32>) -> (usize, i32) {
-    v.iter()
-        .enumerate()
-        .fold((usize::MIN, i32::MIN), |(i_a, a), (i_b, &b)| {
-            if b < a {
-                (i_a, a)
-            } else {
-                (i_b, b)
-            }
-        })
-}
