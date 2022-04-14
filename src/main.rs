@@ -13,6 +13,7 @@ fn main() {
     }
     heap_sort(array.to_vec());
     println!("Generate rand array: {:?}", array);
+    println!("Max: {:?}", ind_max(array.to_vec()));
 }
 
 fn heap_sort(v:Vec<i32>) -> Vec<i32> {
@@ -20,14 +21,14 @@ fn heap_sort(v:Vec<i32>) -> Vec<i32> {
 }
 
 #[allow(dead_code)]
-fn min_ind(v:Vec<i32>) -> (usize, i32) {
+fn ind_max(v:Vec<i32>) -> (usize, i32) {
     v.iter()
         .enumerate()
-        .fold((usize::MAX, i32::MAX), |(i_a, a), (i_b, &b)| {
+        .fold((usize::MIN, i32::MIN), |(i_a, a), (i_b, &b)| {
             if b < a {
-                (i_b, b)
-            } else {
                 (i_a, a)
+            } else {
+                (i_b, b)
             }
         })
 }
