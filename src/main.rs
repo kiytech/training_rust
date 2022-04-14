@@ -4,10 +4,7 @@ const ARRAY_SIZE: usize = 10;
 fn main() {
     let mut array: [i32; ARRAY_SIZE] = [0; ARRAY_SIZE];
     let mut count = 0;
-    loop {
-        if count > ARRAY_SIZE-1 {
-            break;
-        }
+    while count < ARRAY_SIZE-1 {
         array[count] = rand::thread_rng().gen_range(0..100);
         count+=1;
     }
