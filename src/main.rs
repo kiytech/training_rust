@@ -24,17 +24,21 @@ impl NodesIdx {
     }
 }
 
+const ARRAY_SIZE: usize = 20;
 fn main() {
-    const ARRAY_SIZE: usize = 20;
+    let rnd_array = gen_rnd_array();
+    println!("Generate rand array: {:?}", rnd_array);
+    println!("Swaped array       : {:?}", heap_sort(rnd_array.to_vec()));
+}
+
+fn gen_rnd_array() -> [i32; ARRAY_SIZE] {
     let mut array: [i32; ARRAY_SIZE] = [0; ARRAY_SIZE];
     let mut count = 0;
     while count < ARRAY_SIZE {
         array[count] = rand::thread_rng().gen_range(0..100);
         count+=1;
-    }
-
-    println!("Generate rand array: {:?}", array);
-    println!("Swaped array       : {:?}", heap_sort(array.to_vec()));
+    };
+    array
 }
 
 fn heap_sort(mut v: Vec<i32>) -> Vec<i32> {
@@ -79,4 +83,17 @@ fn recheck_child(v: &mut Vec<i32>, nodes_idx: &NodesIdx) {
     };
     nodes_idx_down.calc_child_idx();
     comp_and_swap(v, &mut nodes_idx_down)
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{gen_rnd_array, heap_sort};
+    #[test]
+    fn cmp_my_sort_and_rust_sort() {
+        for _elm in 0..1000 {
+            let mut rnd_vec = gen_rnd_array().to_vec();
+            rnd_vec.sort();
+            assert_eq!(heap_sort(rnd_vec.clone()), rnd_vec);
+        }
+    }
 }
