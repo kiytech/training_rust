@@ -1,7 +1,5 @@
 use rand::Rng;
 
-const ARRAY_SIZE: usize = 8;
-
 struct NodesIdx {
     parent: usize,
     child: usize,
@@ -27,10 +25,11 @@ impl NodesIdx {
 }
 
 fn main() {
+    const ARRAY_SIZE: usize = 20;
     let mut array: [i32; ARRAY_SIZE] = [0; ARRAY_SIZE];
     let mut count = 0;
     while count < ARRAY_SIZE {
-        array[count] = rand::thread_rng().gen_range(0..10);
+        array[count] = rand::thread_rng().gen_range(0..100);
         count+=1;
     }
 
@@ -50,14 +49,14 @@ fn heap_sort(mut v: Vec<i32>) -> Vec<i32> {
 
 fn nodes_swap(v: &mut Vec<i32>, nodes_idx: &mut NodesIdx) {
     for _j in 0..nodes_idx.parent+1 {
-        down_heap(v, nodes_idx);
+        comp_and_swap(v, nodes_idx);
         if nodes_idx.parent != 0 {
             nodes_idx.set_parent(nodes_idx.parent - 1);
         }
     }
 }
 
-fn down_heap(v: &mut Vec<i32>, nodes_idx: &mut NodesIdx) {
+fn comp_and_swap(v: &mut Vec<i32>, nodes_idx: &mut NodesIdx) {
     for _i in 0..2 {
         if nodes_idx.child > nodes_idx.node_count-1 {
             continue;
@@ -65,19 +64,19 @@ fn down_heap(v: &mut Vec<i32>, nodes_idx: &mut NodesIdx) {
         if v[nodes_idx.parent] < v[nodes_idx.child] {
             v.swap(nodes_idx.parent, nodes_idx.child);
             if nodes_idx.has_child() {
-                inv_down_heap(v, &nodes_idx);
+                recheck_child(v, &nodes_idx);
             }
         }
         nodes_idx.child = nodes_idx.child + 1;
     }
 }
 
-fn inv_down_heap(v: &mut Vec<i32>, nodes_idx: &NodesIdx) {
+fn recheck_child(v: &mut Vec<i32>, nodes_idx: &NodesIdx) {
     let mut nodes_idx_down = NodesIdx {
         parent: nodes_idx.child,
         child: 0,
         node_count: nodes_idx.node_count
     };
     nodes_idx_down.calc_child_idx();
-    down_heap(v, &mut nodes_idx_down)
+    comp_and_swap(v, &mut nodes_idx_down)
 }
