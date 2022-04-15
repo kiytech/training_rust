@@ -41,13 +41,13 @@ fn heap_sort(mut v: Vec<i32>) -> Vec<i32> {
     for i in 0..v.len()-1 {
         let mut nodes_idx = NodesIdx {parent: 0, child: 0, node_count: v.len()-i};
         nodes_idx.calc_last_parent_idx();
-        nodes_swap(&mut v, &mut nodes_idx);
+        down_heap(&mut v, &mut nodes_idx);
         v.swap(0, nodes_idx.node_count-1);
     };
     v
 }
 
-fn nodes_swap(v: &mut Vec<i32>, nodes_idx: &mut NodesIdx) {
+fn down_heap(v: &mut Vec<i32>, nodes_idx: &mut NodesIdx) {
     for _j in 0..nodes_idx.parent+1 {
         comp_and_swap(v, nodes_idx);
         if nodes_idx.parent != 0 {
