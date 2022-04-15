@@ -38,26 +38,28 @@ fn main() {
     println!("Swaped array       : {:?}", heap_sort(array.to_vec()));
 }
 
-fn heap_sort(v:Vec<i32>) -> Vec<i32> {
-    let mut nodes_idx = NodesIdx {parent: 0, child: 0, node_count: v.len()};
-    nodes_idx.calc_last_parent_idx();
-    nodes_swap(v, nodes_idx)
+fn heap_sort(mut v: Vec<i32>) -> Vec<i32> {
+    for i in 0..v.len()-1 {
+        let mut nodes_idx = NodesIdx {parent: 0, child: 0, node_count: v.len()-i};
+        nodes_idx.calc_last_parent_idx();
+        nodes_swap(&mut v, &mut nodes_idx);
+        v.swap(0, nodes_idx.node_count-1);
+    };
+    v
 }
 
-fn nodes_swap(mut v:Vec<i32>, mut nodes_idx:NodesIdx) -> Vec<i32> {
+fn nodes_swap(v: &mut Vec<i32>, nodes_idx: &mut NodesIdx) {
     for _j in 0..nodes_idx.parent+1 {
-        down_heap(&mut v, &mut nodes_idx);
-        println!("parent: {}, child: {}", nodes_idx.parent, nodes_idx.child);
+        down_heap(v, nodes_idx);
         if nodes_idx.parent != 0 {
             nodes_idx.set_parent(nodes_idx.parent - 1);
         }
     }
-    v
 }
 
 fn down_heap(v: &mut Vec<i32>, nodes_idx: &mut NodesIdx) {
     for _i in 0..2 {
-        if nodes_idx.child > v.len()-1 {
+        if nodes_idx.child > nodes_idx.node_count-1 {
             continue;
         }
         if v[nodes_idx.parent] < v[nodes_idx.child] {
