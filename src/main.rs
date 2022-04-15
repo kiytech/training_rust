@@ -1,17 +1,6 @@
 use rand::Rng;
 
 const ARRAY_SIZE: usize = 8;
-fn main() {
-    let mut array: [i32; ARRAY_SIZE] = [0; ARRAY_SIZE];
-    let mut count = 0;
-    while count < ARRAY_SIZE {
-        array[count] = rand::thread_rng().gen_range(0..10);
-        count+=1;
-    }
-
-    println!("Generate rand array: {:?}", array);
-    println!("Swaped array       : {:?}", heap_sort(array.to_vec()));
-}
 
 struct NodesIdx {
     parent: usize,
@@ -35,6 +24,18 @@ impl NodesIdx {
     fn has_child(&self)  -> bool {
         (self.child * 2 + 1) < self.node_count - 1
     }
+}
+
+fn main() {
+    let mut array: [i32; ARRAY_SIZE] = [0; ARRAY_SIZE];
+    let mut count = 0;
+    while count < ARRAY_SIZE {
+        array[count] = rand::thread_rng().gen_range(0..10);
+        count+=1;
+    }
+
+    println!("Generate rand array: {:?}", array);
+    println!("Swaped array       : {:?}", heap_sort(array.to_vec()));
 }
 
 fn heap_sort(v:Vec<i32>) -> Vec<i32> {
