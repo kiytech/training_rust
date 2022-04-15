@@ -45,7 +45,7 @@ fn heap_sort(v:Vec<i32>) -> Vec<i32> {
 
 fn nodes_swap(mut v:Vec<i32>, mut nodes_idx:NodesIdx) -> Vec<i32> {
     for _j in 0..nodes_idx.parent+1 {
-        down_heap(&v, nodes_idx);
+        down_heap(&mut v, &mut nodes_idx);
         println!("parent: {}, child: {}", nodes_idx.parent, nodes_idx.child);
         if nodes_idx.parent != 0 {
             nodes_idx.set_parent(nodes_idx.parent - 1);
@@ -54,7 +54,7 @@ fn nodes_swap(mut v:Vec<i32>, mut nodes_idx:NodesIdx) -> Vec<i32> {
     v
 }
 
-fn down_heap(v: &mut Vec<i32>, mut nodes_idx: &NodesIdx) {
+fn down_heap(v: &mut Vec<i32>, nodes_idx: &mut NodesIdx) {
     for _i in 0..2 {
         if nodes_idx.child > v.len()-1 {
             continue;
@@ -76,5 +76,5 @@ fn inv_down_heap(v: &mut Vec<i32>, nodes_idx: &NodesIdx) {
         node_count: nodes_idx.node_count
     };
     nodes_idx_down.calc_child_idx();
-    down_heap(v, &nodes_idx_down)
+    down_heap(v, &mut nodes_idx_down)
 }
